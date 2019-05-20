@@ -1,0 +1,30 @@
+apply plugin: 'groovy'
+apply plugin: 'application'
+
+repositories {
+    jcenter()
+}
+
+mainClassName = "net.codetojoy.survey.GreetingClient"
+
+dependencies {
+    compile project(':model')
+
+    compile 'org.glassfish.jersey.core:jersey-client:2.5.1'
+    compile 'org.glassfish.jersey.media:jersey-media-moxy:2.5.1'
+
+    compile 'org.codehaus.groovy:groovy-all:2.4.9'
+}
+
+run {
+    args ""
+}
+
+installDist.doFirst {
+    ant.delete(dir: project.stagingDir)
+}
+
+installDist {
+    into project.stagingDir
+}
+

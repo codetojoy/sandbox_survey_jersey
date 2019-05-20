@@ -1,2 +1,2 @@
-include 'model', 'server' 
+include 'model', 'server', 'client'
 

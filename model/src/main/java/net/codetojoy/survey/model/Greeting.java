@@ -18,6 +18,11 @@ public class Greeting implements Serializable {
         this.content = content;
     }
 
+    @Override
+    public String toString() {
+        return "id: " + id + " content: " + content;
+    }
+
     // getters, setters 
 
     public long getId() {
