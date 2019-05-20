@@ -1,1 +1,5 @@
-# sandbox_survey_jersey
+
+### Intro
+
+* simple sandbox for experimenting with JAX-RS / Jersey 
+
