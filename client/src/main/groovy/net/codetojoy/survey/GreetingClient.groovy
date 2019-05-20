@@ -16,21 +16,43 @@ class GreetingClient {
         return resource
     }
 
-    def go() {
-        def resource = getGreetingResource("222")
+    def getGreetingById(def id) {
+        def resource = getGreetingResource(id)
         def builder = resource.request(MediaType.APPLICATION_JSON)
         def invocation = builder.buildGet()
         def responseType = new GenericType<Greeting>() {}
         def greeting = invocation.invoke(responseType)
+        return greeting
+    }
 
-        println "Greeting: " + greeting.toString()
+    final def GET_BY_ID = "1" 
+
+    def processCommand() {
+        Prompt prompt = new Prompt()
+        String input = prompt.getInput("\n\ncmd: [1=get by id, Q=quit] ?", 
+                                        GET_BY_ID)
+
+        if (input.equalsIgnoreCase(GET_BY_ID)) {
+            String id = prompt.getInput("enter greeting id: "); 
+            def greeting = getGreetingById(id);
+            println "Greeting: " + greeting.toString()
+        } 
+    }
+
+    void inputLoop() {
+        while (true) {
+            try {
+                processCommand()
+            } catch(Exception ex) {
+                System.err.println("\nTRACER command failed! check if the servlet is running \n")
+                System.err.println("\nTRACER exceptionL: ${ex.message}")
+            }
+        }
     }
 
     static void main(String[] args) {
         def client = new GreetingClient()
-        client.go()
-
-        println "Ready."
+        client.inputLoop()
     }
 }
 

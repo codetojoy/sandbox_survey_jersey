@@ -7,6 +7,6 @@
 
 * build war: `cd server ; ./go_build_and_deploy.sh`
 * test script: `cd server ; ./test_get_greeting.sh`
-* test client: `cd client ; gradle clean run` 
+* test client: `cd client ; ./run_client.sh`
     * see `~/client/scripts` for a direct Groovy script 
 
