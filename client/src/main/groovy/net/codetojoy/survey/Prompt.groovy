@@ -6,7 +6,7 @@ import java.util.*;
 class Prompt {
     private static final String QUIT = "q";
 
-    String getInput(String prompt, String ...options) {
+    def getInput(def prompt, def options = []) {
         String input = "";
         boolean isMatch = false;
 
@@ -16,7 +16,7 @@ class Prompt {
             Scanner scanner = new java.util.Scanner(System.in);
             input = scanner.nextLine();
            
-            if (options == null || options.length == 0) {
+            if (options.isEmpty()) {
                 isMatch = true;
             } else {
                 isMatch = matchInput(input, options);
@@ -26,7 +26,7 @@ class Prompt {
         return input;
     }
 
-    private boolean matchInput(String input, String[] options) {
+    private boolean matchInput(String input, List<String> options) {
         boolean isMatch = false;
 
         for (String option : options) {
