@@ -6,6 +6,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 @Path("/greetings")
 public class GreetingResource {
@@ -20,15 +21,13 @@ public class GreetingResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Greeting> getGreetings() {
-        List<Greeting> greetings = new ArrayList<>();
-
         System.out.println("TRACER 20-MAY SR greetings");
+        
+        List<Greeting> greetings = mockStorage.entrySet()
+                                              .stream()
+                                              .map(Map.Entry::getValue)
+                                              .collect(Collectors.toList());
 
-        for (Long key : mockStorage.keySet()) {
-            Greeting greeting = mockStorage.get(key);
-            greetings.add(greeting);
-        }
- 
         return greetings;
     }
 
