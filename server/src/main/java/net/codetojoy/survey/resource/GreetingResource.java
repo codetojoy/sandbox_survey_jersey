@@ -18,6 +18,21 @@ public class GreetingResource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Greeting> getGreetings() {
+        List<Greeting> greetings = new ArrayList<>();
+
+        System.out.println("TRACER 20-MAY SR greetings");
+
+        for (Long key : mockStorage.keySet()) {
+            Greeting greeting = mockStorage.get(key);
+            greetings.add(greeting);
+        }
+ 
+        return greetings;
+    }
+
+    @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Greeting getGreeting(@PathParam("id") long id) {
