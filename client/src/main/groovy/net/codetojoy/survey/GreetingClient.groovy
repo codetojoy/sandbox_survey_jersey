@@ -9,10 +9,10 @@ import javax.ws.rs.core.*
 class GreetingClient {
     static final def BASE_URI = "http://localhost:5151/survey_jersey/rest"
 
-    def getGreetingResource(def userId) {
+    def getGreetingResource(def id) {
         def client = ClientBuilder.newClient()
         def target = client.target(BASE_URI)
-        def resource = target.path("greetings").queryParam("userId", userId)
+        def resource = target.path("greetings").path(id)
         return resource
     }
 

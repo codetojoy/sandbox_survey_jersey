@@ -17,12 +17,12 @@ public class GreetingResource {
         mockStorage.put(333L, new Greeting(333L, "This is greeting 3"));
     }
 
-    // TODO: change to path param and call it id vs userId 
     @GET
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Greeting getGreeting(@QueryParam("userId") long userId) {
-        System.out.println("TRACER 20-MAY SR userId: " + userId);
-        Greeting greeting = mockStorage.get(userId);
+    public Greeting getGreeting(@PathParam("id") long id) {
+        System.out.println("TRACER 20-MAY SR id: " + id);
+        Greeting greeting = mockStorage.get(id);
  
         return greeting;
     }
