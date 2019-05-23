@@ -5,7 +5,8 @@ repositories {
     jcenter()
 }
 
-mainClassName = "net.codetojoy.survey.GreetingClient"
+// mainClassName = "net.codetojoy.survey.GreetingClient"
+mainClassName = "net.codetojoy.survey.SurveyClient"
 
 dependencies {
     compile project(':model')
