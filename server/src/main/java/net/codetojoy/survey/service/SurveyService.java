@@ -34,13 +34,12 @@ public class SurveyService {
         return surveys;
     }
 
-    /*
-
-    public Greeting getGreeting(long id) {
-        Greeting greeting = mockStorage.get(id);
-        return greeting;
+    public Survey getSurvey(long id) {
+        Survey survey = mockStorage.get(id);
+        return survey;
     }
 
+    /*
     public void createGreeting(Greeting greeting) {
         greeting.setId(nextId);
         mockStorage.put(nextId, greeting);

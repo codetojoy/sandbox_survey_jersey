@@ -16,8 +16,8 @@ class SurveyClient {
         return resource
     }
 
-    def getGreetingResource(def id) {
-        def resource = getGreetingsResource().path(id)
+    def getSurveyResource(def id) {
+        def resource = getSurveysResource().path(id)
         return resource
     }
 
@@ -30,13 +30,13 @@ class SurveyClient {
         return surveys
     }
 
-    def getGreetingById(def id) {
-        def resource = getGreetingResource(id)
+    def getSurveyById(def id) {
+        def resource = getSurveyResource(id)
         def builder = resource.request(MediaType.APPLICATION_JSON)
         def invocation = builder.buildGet()
-        def responseType = new GenericType<Greeting>() {}
-        def greeting = invocation.invoke(responseType)
-        return greeting
+        def responseType = new GenericType<Survey>() {}
+        def survey = invocation.invoke(responseType)
+        return survey
     }
 
     def postNewGreeting(def content) {
@@ -69,12 +69,12 @@ class SurveyClient {
         def input = prompt.getInput("\n\ncmd: [${commandsStr}, Q=quit] ?", COMMANDS)
 
         if (input.equalsIgnoreCase(GET_SURVEYS)) {
-            def greetings = getSurveys()
-            greetings.each { println it }
+            def surveys = getSurveys()
+            surveys.each { println it }
         } else if (input.equalsIgnoreCase(GET_SURVEY_BY_ID)) {
-            // def id = prompt.getInput("enter greeting id: ")
-            // def greeting = getGreetingById(id)
-            // println "Greeting: " + greeting.toString()
+            def id = prompt.getInput("enter survey id: ")
+            def survey = getSurveyById(id)
+            println "Survey: " + survey.toString()
         } else if (input.equalsIgnoreCase(POST_NEW_SURVEY)) {
             // def content = prompt.getInput("enter greeting: ")
             // def greeting = postNewGreeting(content)

@@ -20,16 +20,17 @@ public class SurveyResource {
         return surveys;
     }
 
-    /*
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Greeting getGreeting(@PathParam("id") long id) {
-        Greeting greeting = greetingService.getGreeting(id);
+    public Survey getSurvey(@PathParam("id") long id) {
+        Survey survey = surveyService.getSurvey(id);
 
-        return greeting;
+        return survey;
     }
+
+    /*
 
     // TODO: return location header ???
     @POST
