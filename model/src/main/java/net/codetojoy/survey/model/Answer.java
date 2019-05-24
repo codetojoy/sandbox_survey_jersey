@@ -6,16 +6,26 @@ public class Answer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private long id;
-    private String content;
+    private String desc;
 
     public Answer() {
-       this.id = -999L;
-       this.content = "";
+       this.id = Constants.UNKNOWN_ID;
+       this.desc = "";
     }
 
-    public Answer(long id, String content) {
+    public Answer(long id, String desc) {
         this.id = id;
-        this.content = content;
+        this.desc = desc;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder buffer = new StringBuilder();
+
+        buffer.append("id: " + id);
+        buffer.append(" desc: " + desc);
+
+        return buffer.toString();
     }
 
     // getters, setters
@@ -28,11 +38,11 @@ public class Answer implements Serializable {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }

@@ -9,21 +9,21 @@ public class Question implements Serializable {
     private long id;
     private String logicalName;
     private String desc;
-    // private List<Answer> answers;
+    private List<Answer> answers;
     // private Response response;
 
     public Question() {
         this.id = Constants.UNKNOWN_ID;
         this.logicalName = "";
         this.desc = "";
-        // this.answers = new ArrayList<>();
+        this.answers = new ArrayList<>();
     }
 
-    public Question(long id, String logicalName, String desc) { // , List<Answer> answers) {
+    public Question(long id, String logicalName, String desc, List<Answer> answers) {
         this.id = id;
         this.logicalName = logicalName;
         this.desc = desc;
-        // this.answers = answers;
+        this.answers = answers;
     }
 
     @Override
@@ -34,6 +34,10 @@ public class Question implements Serializable {
         buffer.append("id: " + id);
         buffer.append(" logicalName: " + logicalName);
         buffer.append(" desc: " + desc);
+
+        for (Answer answer : answers) {
+            buffer.append(answer.toString() + "\n");
+        }
 
         return buffer.toString();
     }
@@ -64,7 +68,6 @@ public class Question implements Serializable {
         this.desc = desc;
     }
 
-    /*
     public List<Answer> getAnswers() {
         return answers;
     }
@@ -72,5 +75,4 @@ public class Question implements Serializable {
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
-    */
 }
