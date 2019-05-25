@@ -11,12 +11,14 @@ public class Answer implements Serializable {
     private String desc;
     private boolean selected;
     private int score;
+    private String comment;
 
     public Answer() {
        this.id = Constants.UNKNOWN_ID;
        this.desc = "";
        this.selected = false;
        this.score = 0;
+       this.comment = "";
     }
 
     public Answer(long id, String desc, boolean selected, int score) {
@@ -24,10 +26,21 @@ public class Answer implements Serializable {
         this.desc = desc;
         this.selected = selected;
         this.score = score;
+        this.comment = "";
     }
 
     public Answer(long id, String desc) {
         this(id, desc, false, 0);
+    }
+
+    public void clear() {
+        selected = false;
+        comment = "";
+    }
+
+    public void doSelect(String comment) {
+        this.selected = true;
+        this.comment = comment;
     }
 
     @Override
@@ -38,6 +51,7 @@ public class Answer implements Serializable {
         buffer.append(" desc: " + desc);
         buffer.append(" selected: " + selected);
         buffer.append(" score: " + score);
+        buffer.append(" comment: " + comment);
 
         return buffer.toString();
     }
@@ -74,5 +88,13 @@ public class Answer implements Serializable {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

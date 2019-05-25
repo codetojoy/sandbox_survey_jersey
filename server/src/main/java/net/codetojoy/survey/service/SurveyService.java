@@ -47,9 +47,46 @@ public class SurveyService {
         return surveyId;
     }
 
-    /*
-    public void updateGreeting(long id, Greeting greeting) {
-        mockStorage.put(id, greeting);
+    protected Survey findSurveyById(long id) {
+        Survey survey = mockStorage.get(id);
+
+        return survey;
     }
-    */
+
+    protected Answer findAnswerById(List<Answer> answers, long id) {
+        Answer result = answers.stream()
+                               .filter(a -> a.getId() == id)
+                               .findAny()
+                               .orElse(null);
+        return result;
+    }
+
+    protected void updateAnswer(Answer answer, UpdateSurveyRequest updateSurveyRequest) {
+        long thisAnswerId = answer.getId();
+        Answer updateAnswer = findAnswerById(updateSurveyRequest.getAnswers(), thisAnswerId);
+
+        if (updateAnswer == null) {
+            answer.clear();
+        } else {
+            answer.doSelect(updateAnswer.getComment());
+        }
+    }
+
+    protected void updateQuestion(Question question, UpdateSurveyRequest updateSurveyRequest) {
+        for (Answer answer : question.getAnswers()) {
+            updateAnswer(answer, updateSurveyRequest);
+        }
+    }
+
+    protected void updateSurvey(Survey survey, UpdateSurveyRequest updateSurveyRequest) {
+        for (Question question : survey.getQuestions()) {
+            updateQuestion(question, updateSurveyRequest);
+        }
+    }
+
+    public void updateSurvey(long id, UpdateSurveyRequest updateSurveyRequest) {
+        Survey survey = findSurveyById(id);
+        updateSurvey(survey, updateSurveyRequest);
+        mockStorage.put(id, survey);
+    }
 }
