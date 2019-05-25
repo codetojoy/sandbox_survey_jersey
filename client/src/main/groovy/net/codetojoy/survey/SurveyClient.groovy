@@ -39,13 +39,15 @@ class SurveyClient {
         return survey
     }
 
-    def postNewGreeting(def content) {
-        def greeting = new Greeting()
-        greeting.setContent(content)
-        def resource = getGreetingsResource()
+    def postNewSurvey(def userIdStr) {
+        long userId = userIdStr as Long
+        def surveyRequest = new SurveyRequest()
+        surveyRequest.userId = userId
+        def resource = getSurveysResource()
         def builder = resource.request(MediaType.APPLICATION_JSON)
-        builder.post(javax.ws.rs.client.Entity.entity(greeting,
-                     javax.ws.rs.core.MediaType.APPLICATION_JSON))
+        def response = builder.post(javax.ws.rs.client.Entity.entity(surveyRequest, javax.ws.rs.core.MediaType.APPLICATION_JSON))
+        def uri = response.getHeaderString("Location")
+        return uri
     }
 
     def updateGreetingById(def id, def content) {
@@ -60,12 +62,13 @@ class SurveyClient {
     final def GET_SURVEY_BY_ID = "2"
     final def POST_NEW_SURVEY = "3"
     final def PUT_UPDATE_SURVEY = "4"
+    final def CUSTOM_WORKFLOW = "5"
     final def COMMANDS = [GET_SURVEYS, GET_SURVEY_BY_ID,
-                          POST_NEW_SURVEY, PUT_UPDATE_SURVEY]
+                          POST_NEW_SURVEY, PUT_UPDATE_SURVEY, CUSTOM_WORKFLOW]
 
     def processCommand() {
         def prompt = new Prompt()
-        def commandsStr = "1=get all, 2=get by id, 3=post new, 4=update by id"
+        def commandsStr = "1=get all, 2=get by id, 3=post new, 4=update by id, 5=workflow"
         def input = prompt.getInput("\n\ncmd: [${commandsStr}, Q=quit] ?", COMMANDS)
 
         if (input.equalsIgnoreCase(GET_SURVEYS)) {
@@ -76,14 +79,17 @@ class SurveyClient {
             def survey = getSurveyById(id)
             println "Survey: " + survey.toString()
         } else if (input.equalsIgnoreCase(POST_NEW_SURVEY)) {
-            // def content = prompt.getInput("enter greeting: ")
-            // def greeting = postNewGreeting(content)
-            //  println "OK"
+            def userId = prompt.getInput("enter user id: ")
+            def uri = postNewSurvey(userId)
+            println "uri: " + uri
+            println "OK"
         } else if (input.equalsIgnoreCase(PUT_UPDATE_SURVEY)) {
             // def id = prompt.getInput("enter greeting id: ")
             // def content = prompt.getInput("enter greeting: ")
             // def greeting = updateGreetingById(id, content)
             // println "OK"
+        } else if (input.equalsIgnoreCase(CUSTOM_WORKFLOW)) {
+            println "TBD"
         }
     }
 

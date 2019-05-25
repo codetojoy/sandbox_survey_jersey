@@ -39,13 +39,15 @@ public class SurveyService {
         return survey;
     }
 
-    /*
-    public void createGreeting(Greeting greeting) {
-        greeting.setId(nextId);
-        mockStorage.put(nextId, greeting);
+    public long createSurvey(long userId) {
+        long surveyId = nextId;
+        Survey survey = new SurveyFactory().buildSurvey(surveyId, userId);
+        mockStorage.put(surveyId, survey);
         nextId++;
+        return surveyId;
     }
 
+    /*
     public void updateGreeting(long id, Greeting greeting) {
         mockStorage.put(id, greeting);
     }

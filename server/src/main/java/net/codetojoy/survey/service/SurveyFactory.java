@@ -40,6 +40,16 @@ class SurveyFactory {
         return questions;
     }
 
+    Survey buildSurvey(long surveyId, long userId) {
+        Survey survey = new Survey();
+
+        survey.setId(surveyId);
+        survey.setUserId(userId);
+        survey.setQuestions(buildQuestions());
+
+        return survey;
+    }
+
     Survey buildSurvey(long surveyId) {
         Survey survey = new Survey();
 

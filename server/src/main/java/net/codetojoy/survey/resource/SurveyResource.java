@@ -1,6 +1,7 @@
 package net.codetojoy.survey.resource;
 
 import net.codetojoy.survey.model.Survey;
+import net.codetojoy.survey.model.SurveyRequest;
 import net.codetojoy.survey.service.SurveyService;
 
 import javax.ws.rs.*;
@@ -20,7 +21,6 @@ public class SurveyResource {
         return surveys;
     }
 
-
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -30,15 +30,17 @@ public class SurveyResource {
         return survey;
     }
 
-    /*
-
-    // TODO: return location header ???
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createGreeting(Greeting greeting) {
-        greetingService.createGreeting(greeting);
+    public Response createSurvey(SurveyRequest surveyRequest, @Context UriInfo uriInfo) {
+        long userId = surveyRequest.getUserId();
+        long surveyId = surveyService.createSurvey(userId);
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path("" + surveyId);
+        return Response.created(builder.build()).build();
     }
 
+    /*
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)

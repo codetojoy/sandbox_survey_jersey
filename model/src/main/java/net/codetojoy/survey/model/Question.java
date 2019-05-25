@@ -32,9 +32,9 @@ public class Question implements Serializable {
     public String toString() {
         StringBuilder buffer = new StringBuilder();
 
-        buffer.append(SPACER + "id: " + id + "\n");
-        buffer.append(SPACER + "logicalName: " + logicalName + "\n");
-        buffer.append(SPACER + "desc: " + desc + "\n");
+        buffer.append("Q.id: " + id + "\n");
+        buffer.append(SPACER + "Q.logicalName: " + logicalName + "\n");
+        buffer.append(SPACER + "Q.desc: " + desc + "\n");
 
         for (Answer answer : answers) {
             buffer.append(answer.toString() + "\n");
