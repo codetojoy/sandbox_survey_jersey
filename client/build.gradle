@@ -11,8 +11,9 @@ mainClassName = "net.codetojoy.survey.SurveyClient"
 dependencies {
     compile project(':model')
 
-    compile 'org.glassfish.jersey.core:jersey-client:2.5.1'
-    compile 'org.glassfish.jersey.media:jersey-media-moxy:2.5.1'
+    compile 'org.glassfish.jersey.core:jersey-client:2.28'
+    compile 'org.glassfish.jersey.media:jersey-media-moxy:2.28'
+    compile 'org.glassfish.jersey.inject:jersey-hk2:2.28'
 
     compile 'org.codehaus.groovy:groovy-all:2.4.9'
 }

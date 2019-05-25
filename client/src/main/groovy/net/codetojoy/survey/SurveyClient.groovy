@@ -5,6 +5,7 @@ import net.codetojoy.survey.model.*
 
 import javax.ws.rs.client.*
 import javax.ws.rs.core.*
+import javax.ws.rs.client.Entity
 
 class SurveyClient {
     static final def BASE_URI = "http://localhost:5151/survey_jersey/rest/v1"
@@ -17,7 +18,7 @@ class SurveyClient {
     }
 
     def getSurveyResource(def id) {
-        def resource = getSurveysResource().path(id)
+        def resource = getSurveysResource().path("" + id)
         return resource
     }
 
@@ -45,16 +46,40 @@ class SurveyClient {
         surveyRequest.userId = userId
         def resource = getSurveysResource()
         def builder = resource.request(MediaType.APPLICATION_JSON)
-        def response = builder.post(javax.ws.rs.client.Entity.entity(surveyRequest, javax.ws.rs.core.MediaType.APPLICATION_JSON))
+        def response = builder.post(Entity.entity(surveyRequest, MediaType.APPLICATION_JSON))
         def uri = response.getHeaderString("Location")
         return uri
     }
 
-    def updateGreetingById(def id, def content) {
-        def greeting = new Greeting(id as long, content)
-        def resource = getGreetingResource(id)
+    def updateSurveyById(def surveyId, def answerIdsStr) {
+        def updateSurveyRequest = new UpdateSurveyRequest()
+        updateSurveyRequest.setSurveyId(surveyId)
+        updateSurveyRequest.setUserId(555)
+
+        def answers = []
+        def answerIds = answerIdsStr.split(",")
+        answerIds.each { answerId ->
+            def answer = new Answer()
+            answer.setId(answerId.trim() as long)
+            answer.comment = "comment: " + new Date().toString()
+            answers << answer
+        }
+        updateSurveyRequest.answers = answers
+
+        /*
+        println "sanity check surveyId: " + updateSurveyRequest.getSurveyId()
+        println "sanity check userId: " + updateSurveyRequest.getUserId()
+        updateSurveyRequest.answers.each {
+            println it.toString()
+        }
+        println "end sanity check"
+        */
+        
+        def resource = getSurveyResource(surveyId)
         def builder = resource.request(MediaType.APPLICATION_JSON)
-        builder.put(javax.ws.rs.client.Entity.entity(greeting,
+
+        // builder.put(Entity.entity(updateSurveyRequest, MediaType.APPLICATION_JSON))
+        builder.put(javax.ws.rs.client.Entity.entity(updateSurveyRequest,
                     javax.ws.rs.core.MediaType.APPLICATION_JSON))
     }
 
@@ -84,10 +109,12 @@ class SurveyClient {
             println "uri: " + uri
             println "OK"
         } else if (input.equalsIgnoreCase(PUT_UPDATE_SURVEY)) {
-            // def id = prompt.getInput("enter greeting id: ")
-            // def content = prompt.getInput("enter greeting: ")
-            // def greeting = updateGreetingById(id, content)
-            // println "OK"
+            println "TRACER 25-MAY 17:00"
+            def surveyId = prompt.getInput("enter survey id: ")
+            def answerIdsStr = prompt.getInput("enter answer ids to select: ")
+
+            updateSurveyById(surveyId as long, answerIdsStr)
+            println "OK"
         } else if (input.equalsIgnoreCase(CUSTOM_WORKFLOW)) {
             println "TBD"
         }
