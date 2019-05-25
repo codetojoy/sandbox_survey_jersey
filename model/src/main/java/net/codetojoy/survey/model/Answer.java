@@ -1,5 +1,7 @@
 package net.codetojoy.survey.model;
 
+import static net.codetojoy.survey.model.Constants.*;
+
 import java.io.Serializable;
 
 public class Answer implements Serializable {
@@ -32,7 +34,7 @@ public class Answer implements Serializable {
     public String toString() {
         StringBuilder buffer = new StringBuilder();
 
-        buffer.append("id: " + id);
+        buffer.append(SPACER + SPACER + "id: " + id);
         buffer.append(" desc: " + desc);
         buffer.append(" selected: " + selected);
         buffer.append(" score: " + score);

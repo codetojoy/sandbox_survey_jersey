@@ -2,6 +2,7 @@ package net.codetojoy.survey.model;
 
 public class Constants {
     public static final long UNKNOWN_ID = -999L;
+    public static final String SPACER = "    ";
 
     public static final long Q1_ID = 101L;
     public static final long Q2_ID = 201L;

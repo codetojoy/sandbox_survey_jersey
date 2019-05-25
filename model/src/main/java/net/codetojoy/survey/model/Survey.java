@@ -1,5 +1,7 @@
 package net.codetojoy.survey.model;
 
+import static net.codetojoy.survey.model.Constants.*;
+
 import java.util.*;
 import java.io.Serializable;
 
@@ -14,8 +16,8 @@ public class Survey implements Serializable {
     private List<Question> questions = new ArrayList<>();
 
     public Survey() {
-       this.id = Constants.UNKNOWN_ID;
-       this.userId = Constants.UNKNOWN_ID;
+       this.id = UNKNOWN_ID;
+       this.userId = UNKNOWN_ID;
        this.questions = new ArrayList<>();
     }
 
@@ -29,12 +31,11 @@ public class Survey implements Serializable {
     public String toString() {
         StringBuilder buffer = new StringBuilder();
 
-        buffer.append("id: " + id);
-        buffer.append(" userId: " + userId);
+        buffer.append("id: " + id + "\n");
+        buffer.append("userId: " + userId + "\n");
         for (Question question : questions) {
-            buffer.append(question.toString());
+            buffer.append(SPACER + question.toString());
         }
-        buffer.append("\n------\n");
 
         return buffer.toString();
     }
